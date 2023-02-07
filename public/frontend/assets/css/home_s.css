@@ -1,0 +1,101 @@
+:root {
+    --navbar_background: #e9e9eb;
+    --navbar_title: #20325a;
+    --navbar_shadow: 0px 0px 10px 0px rgb(0 0 0 / 50%);
+    --navbar_transition: background 0.3s, border 0.3s, border-radius 0.3s,
+        box-shadow 0.3s;
+    --nav_item_color: #20325a;
+    --nav_item_color_active: #f04b4c;
+    --carousel-indicator: #20325a;
+    --carousel-indicator-active: #f04b4c;
+    --slider_text: #d33535;
+}
+
+/* .company_logo {
+    width: 90px;
+    height: 40px;
+    margin-left: 1rem;
+} */
+.logo_img {
+    width: 93px;
+    margin-left: 2rem;
+}
+.navbar-area {
+    box-shadow: var(--navbar_shadow) !important;
+    transition: var(--navbar_transition);
+    background-color: var(--navbar_background);
+}
+.navbar-area.sticky {
+    background-color: var(--navbar_background);
+}
+.registration_button {
+    background-color: var(--navbar_background);
+    color: var(--navbar_title) !important;
+    font-weight: 600 !important;
+}
+.registration_button:hover {
+    background-color: var(--navbar_title);
+    color: var(--navbar_background) !important;
+}
+.title {
+    color: var(--navbar_title);
+}
+
+.navbar-nav > li > a {
+    color: var(--nav_item_color) !important;
+}
+.navbar-area .navbar .navbar-nav .nav-item a:hover,
+.navbar-area.sticky .navbar .navbar-nav .nav-item.active > a {
+    color: var(--nav_item_color_active) !important;
+    border-color: var(--nav_item_color_active) !important;
+}
+
+/* .carousel .carousel-indicators li {
+    background-color: var(--carousel-indicator);
+}
+.carousel .carousel-indicators li.active {
+    background-color: var(--carousel-indicator-active);
+}
+
+/* .slider-content {
+    margin-top: 7.5rem;
+} */
+/* .carousel-item {
+    margin-top: 2rem;
+}
+.slider-content > h1 {
+    color: var(--navbar_title) !important;
+} */
+
+.slider_section {
+    margin-top: 5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 1rem;
+}
+.slider_title {
+    color: var(--navbar_title);
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.slider_text {
+    margin-top: 2rem;
+    color: var(--slider_text);
+    font-size: 20px;
+    font-weight: 350;
+}
+@media (max-width: 767px) {
+    .slider_title {
+    color: var(--navbar_title);
+    font-size: 40px;
+    font-weight: 450;
+    padding-top: 1.5rem;
+}.slider_text {
+    font-size: 16px;
+    font-weight: 300;
+}.slider_section {
+    padding-left: 0rem;
+    padding-right: 0rem;
+    padding-bottom: 1rem;
+} }
