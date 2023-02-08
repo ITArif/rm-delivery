@@ -1,0 +1,16 @@
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(231 230 217 / 74%);
+    min-height: 100vh;
+}
+
+.main-sidebar {
+    height: 100vh !important;
+    background-color: white;
+}
