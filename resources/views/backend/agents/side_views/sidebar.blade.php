@@ -30,13 +30,13 @@
                 <li class="nav-item ">
                     <a href="{{ url('agents/dashboard') }}"
                         class="nav-link {{ Request::is('agents/dashboard') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>Agents</p>
+                        <i class="nav-icon fa-solid fa-user-group"></i>
+                        <p>All Riders</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('agents/create-rider') }}"
-                        class="nav-link  {{ Request::is('agents/create-rider') ? 'active' : '' }}">
+                    <a href="{{ url('agents/create-rider-form') }}"
+                        class="nav-link  {{ Request::is('agents/create-rider-form') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>create user</p>
                     </a>

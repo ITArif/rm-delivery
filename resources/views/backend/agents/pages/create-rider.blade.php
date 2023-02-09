@@ -57,13 +57,18 @@ Agent Dashboard
 <script src="{{ asset('backend/plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- Page specific script -->
 <script>
-    //     $(document).Toasts('create', {
-//   title: 'Toast Title',
-//   body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-//   autohide: true,
-//   delay: 2000,
+    @if(Session::has('msg'))
+        let type = "{{ Session::get('type') }}";
+        $(document).Toasts('create', {
+            class: '{{ Session::get('type') }}', // make sure type is adminlte toastr default class type
+            title: '{{ Session::get('title') }}',
+            body: '{{ Session::get('msg') }}',
+            autohide: true,
+            delay: 2000,
 
-// })
+})
+    @endif
+
 </script>
 @endsection
 @section('navbar')
@@ -96,56 +101,71 @@ Agent Dashboard
                             <div class="row">
                                 <div class="col-md-12 order-md-last">
                                     <!-- <h4 class="mb-3">Billing address</h4> -->
-                                    <form class="needs-validation" action="{{route('registered')}}" method="post">
+                                    <form class="needs-validation" method="POST"
+                                        action="{{ url('agents/rider-create')}}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row g-3">
-                                            <div class="col-sm-6">
-                                                <label for="firstName" class="form-label"
-                                                    style="font-weight: bold;">সম্পুন্য আপনার নাম(As Passport/NID)<span
-                                                        style="color: red;">*</span></label>
-                                                <input type="text" class="form-control" name="full_name"
-                                                    placeholder="আপনার নাম">
-                                                @if ($errors->has('full_name'))
-                                                <span class="text-danger">
-                                                    {{ $errors->first('full_name') }}
-                                                </span>
-                                                @endif
+
+                                            <div class="col-sm-6 form-group">
+                                                <label for="name" class="form-label" style="font-weight: bold;">Full
+                                                    Name(As Passport/NID)<span style="color: red;">*</span></label>
+                                                <input type="text"
+                                                    class="form-control  @error('name') is-invalid @enderror"
+                                                    name="name" placeholder="Rider Full Name" value="{{ old('name') }}">
+                                                @error('name')
+                                                <div class=" invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+
+                                                @enderror
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <label for="firstName" class="form-label"
-                                                    style="font-weight: bold;">আপনার ফোন নাম্বার<span
-                                                        style="color: red;">*</span></label>
-                                                <input type="text" class="form-control" name="phone"
-                                                    placeholder="ফোন নাম্বার">
-                                                @if ($errors->has('phone'))
-                                                <span class="text-danger">
-                                                    {{ $errors->first('phone') }}
-                                                </span>
-                                                @endif
+                                            <div class="col-sm-6 form-group">
+                                                <label for="phone" class="form-label" style="font-weight: bold;">Phone
+                                                    Number<span style="color: red;">*</span></label>
+                                                <input type="text"
+                                                    class="form-control  @error('phone') is-invalid @enderror"
+                                                    name="phone" placeholder="Rider Phone Number"
+                                                    value="{{ old('phone') }}">
+                                                @error('phone')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+
+                                                @enderror
                                             </div>
-                                            <div class="col-sm-6">
-                                                <label for="firstName" class="form-label"
-                                                    style="font-weight: bold;">আপনার ইমেইল (যদি থাকে)</label>
-                                                <input type="email" class="form-control" name="email"
-                                                    placeholder="ইমেইল নাম্বার">
+                                            <div class="col-sm-6 form-group">
+                                                <label for="email" class="form-label" style="font-weight: bold;">Email
+                                                    Address<span style="color: red;">*</span></label>
+                                                <input type="text"
+                                                    class="form-control  @error('email') is-invalid @enderror"
+                                                    name="email" placeholder="Rider Email Address"
+                                                    value="{{ old('email') }}">
+                                                @error('email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+
+                                                @enderror
                                             </div>
-                                            <div class="col-sm-6">
-                                                <label for="lastName" class="form-label"
-                                                    style="font-weight: bold;">আপনার বয়স কত?<span
+                                            <div class="col-sm-6 form-group">
+                                                <label for="age" class="form-label" style="font-weight: bold;">Age<span
                                                         style="color: red;">*</span></label>
-                                                <input type="text" class="form-control" name="age" placeholder="বয়স">
-                                                @if ($errors->has('age'))
-                                                <span class="text-danger">
-                                                    {{ $errors->first('age') }}
-                                                </span>
-                                                @endif
+                                                <input type="number"
+                                                    class="form-control  @error('age') is-invalid @enderror" name="age"
+                                                    placeholder="Rider Age" value="{{ old('age') }}">
+                                                @error('age')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+
+                                                @enderror
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="state" class="form-label"
-                                                    style="font-weight: bold;">লিঙ্গ<span
+                                            <div class="col-md-6 form-group">
+                                                <label for="gender" class="form-label"
+                                                    style="font-weight: bold;">Gender<span
                                                         style="color: red;">*</span></label>
-                                                <select class="form-select" name="gender">
+                                                <select class="form-select" name="gender" value="{{ old('gender') }}">
                                                     <option value="">...Choose Gender...</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">FeMale</option>
@@ -157,9 +177,10 @@ Agent Dashboard
                                                 @endif
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <label for="lastName" class="form-label"
-                                                    style="font-weight: bold;">আপনার জেলা<span
+
+                                            <div class="col-sm-6 form-group">
+                                                <label for="district" class="form-label"
+                                                    style="font-weight: bold;">District<span
                                                         style="color: red;">*</span></label>
                                                 <select class="form-select" name="district">
                                                     <option value="">...Choose District...</option>
@@ -174,45 +195,53 @@ Agent Dashboard
                                                 @endif
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <label for="lastName" class="form-label"
-                                                    style="font-weight: bold;">থানা<span
-                                                        style="color: red;">*</span></label>
-                                                <input type="text" class="form-control" name="thana" placeholder="থানা">
-                                                @if ($errors->has('thana'))
-                                                <span class="text-danger">
-                                                    {{ $errors->first('thana') }}
-                                                </span>
-                                                @endif
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label for="lastName" class="form-label"
-                                                    style="font-weight: bold;">আপনার বর্তমান ঠিকানা<span
-                                                        style="color: red;">*</span></label>
-                                                <input type="text" class="form-control" name="present_address"
-                                                    placeholder="বর্তমান ঠিকানা">
-                                                @if ($errors->has('present_address'))
-                                                <span class="text-danger">
-                                                    {{ $errors->first('present_address') }}
-                                                </span>
-                                                @endif
+                                            <div class="col-sm-6 form-group">
+                                                <label for="thana" class="form-label" style="font-weight: bold;">Thana
+                                                    <span style="color: red;">*</span></label>
+                                                <input type="text"
+                                                    class="form-control  @error('thana') is-invalid @enderror"
+                                                    name="thana" placeholder="Thana">
+                                                @error('thana')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+
+                                                @enderror
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <label for="lastName" class="form-label"
-                                                    style="font-weight: bold;">আপনার স্থায়ী ঠিকানা<span
+                                            <div class="col-sm-6 form-group">
+                                                <label for="present_address" class="form-label"
+                                                    style="font-weight: bold;">Present Address<span
                                                         style="color: red;">*</span></label>
-                                                <input type="text" class="form-control" name="permanent_address"
-                                                    placeholder="permanent_address">
-                                                @if ($errors->has('permanent_address'))
-                                                <span class="text-danger">
-                                                    {{ $errors->first('permanent_address') }}
-                                                </span>
-                                                @endif
+                                                <input type="text"
+                                                    class="form-control  @error('present_address') is-invalid @enderror"
+                                                    name="present_address" placeholder="Rider Present Address">
+                                                @error('present_address')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+
+                                                @enderror
                                             </div>
-                                            <div class="col-sm-6">
-                                                <label for="state" class="form-label" style="font-weight: bold;">আপনার
-                                                    শিক্ষাগত যোগ্যতা<span style="color: red;">*</span></label>
+
+                                            <div class="col-sm-6 form-group">
+                                                <label for="permanent_address" class="form-label"
+                                                    style="font-weight: bold;">Permanent Address<span
+                                                        style="color: red;">*</span></label>
+                                                <input type="text"
+                                                    class="form-control  @error('permanent_address') is-invalid @enderror"
+                                                    name="permanent_address" placeholder="Rider Permanent Address">
+                                                @error('permanent_address')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="education" class="form-label"
+                                                    style="font-weight: bold;">Education<span
+                                                        style="color: red;">*</span></label>
                                                 <select class="form-select" name="education">
                                                     <option value="">...Choose Education...</option>
                                                     <option value="ssc">SSC</option>
@@ -220,99 +249,135 @@ Agent Dashboard
                                                     <option value="horns">Honrs</option>
                                                     <option value="masters">MA Masters</option>
                                                 </select>
-                                                @if ($errors->has('education'))
+                                                @error('education')
                                                 <span class="text-danger">
-                                                    {{ $errors->first('education') }}
+                                                    {{ $message }}
                                                 </span>
-                                                @endif
+
+                                                @enderror
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <label for="state" class="form-label" style="font-weight: bold;">আপনার
-                                                    পেশা<span style="color: red;">*</span></label>
-                                                <select class="form-select" name="Occupation">
+                                            <div class="col-sm-6 form-group">
+                                                <label for="occupation" class="form-label"
+                                                    style="font-weight: bold;">Occupation<span
+                                                        style="color: red;">*</span></label>
+                                                <select class="form-select" name="occupation">
                                                     <option value="">...Choose Occupation...</option>
                                                     <option value="student">Student</option>
                                                     <option value="job">Job</option>
                                                     <option value="business">Business</option>
                                                 </select>
-                                                @if ($errors->has('Occupation'))
+                                                @error('occupation')
                                                 <span class="text-danger">
-                                                    {{ $errors->first('Occupation') }}
+                                                    {{ $message }}
                                                 </span>
-                                                @endif
+
+                                                @enderror
                                             </div>
-                                            <div class="col-sm-6">
-                                                <label for="state" class="form-label" style="font-weight: bold;">আপনার
-                                                    বৈবাহিক অবস্থা</label>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="marital_status" class="form-label"
+                                                    style="font-weight: bold;">
+                                                    Marital Status</label>
                                                 <select class="form-select" name="marital_status">
                                                     <option value="">...Choose Marital Status...</option>
                                                     <option value="maried">Maried</option>
-                                                    <option value="unmaried">Un Maried</option>
+                                                    <option value="unmaried">Un-Maried</option>
                                                 </select>
+                                                @error('marital_status')
+                                                <span class="text-danger">
+                                                    {{ $message }}
+                                                </span>
+
+                                                @enderror
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <label for="state" class="form-label" style="font-weight: bold;">আপনি কি
-                                                    মোটরসাইকেল চলতে পারেন?<span style="color: red;">*</span></label>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="motorcycle_ride" class="form-label"
+                                                    style="font-weight: bold;">
+                                                    Rider Can Ride Motor Cycle?<span
+                                                        style="color: red;">*</span></label>
                                                 <select class="form-select" name="motorcycle_ride">
                                                     <option value="">...Choose Motorcycle Ride...</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="no">No</option>
                                                 </select>
-                                                @if ($errors->has('motorcycle_ride'))
+                                                @error('motorcycle_ride')
                                                 <span class="text-danger">
-                                                    {{ $errors->first('motorcycle_ride') }}
+                                                    {{ $message }}
                                                 </span>
-                                                @endif
+
+                                                @enderror
                                             </div>
-                                            <div class="col-sm-6">
-                                                <label for="state" class="form-label" style="font-weight: bold;">আপনি কি
-                                                    স্মার্ট ফোনের ম্যাপ দেখে যেকোনো স্থানে যেতে সক্ষম?<span
-                                                        style="color: red;">*</span></label>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="smart_phone_map" class="form-label"
+                                                    style="font-weight: bold;">Rider Can Use
+                                                    Google Map ?<span style="color: red;">*</span></label>
                                                 <select class="form-select" name="smart_phone_map">
                                                     <option value="">...Choose smart_phone_map...</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="no">No</option>
                                                 </select>
-                                                @if ($errors->has('smart_phone_map'))
+                                                @error('smart_phone_map')
                                                 <span class="text-danger">
-                                                    {{ $errors->first('smart_phone_map') }}
+                                                    {{ $message }}
                                                 </span>
-                                                @endif
+                                                @enderror
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <label for="state" class="form-label" style="font-weight: bold;">আপনার
-                                                    পাসপোর্টের কি ১ বছরের মেয়াদ আছে?<span
+                                            <div class="col-sm-6 form-group">
+                                                <label for="passport_validity" class="form-label"
+                                                    style="font-weight: bold;">Passport Validity More Than a Year?<span
                                                         style="color: red;">*</span></label>
                                                 <select class="form-select" name="passport_validity">
                                                     <option value="">...Choose passport_validity...</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="no">No</option>
                                                 </select>
-                                                @if ($errors->has('passport_validity'))
+                                                @error('passport_validity')
                                                 <span class="text-danger">
-                                                    {{ $errors->first('passport_validity') }}
+                                                    {{ $message }}
                                                 </span>
-                                                @endif
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12 form-group">
+                                                <label for="profile_pic" class="form-label">Rider Photo</label>
+                                                <input class="form-control" type="file" name="profile_pic">
+                                                @error('profile_pic')
+                                                <span class="text-danger">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12 form-group">
+                                                <label for="nid" class="form-label">Rider National ID</label>
+                                                <input class="form-control" type="file" name="nid">
+                                                @error('nid')
+                                                <span class="text-danger">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12 form-group">
+                                                <label for="passport_pic" class="form-label">Rider Passport
+                                                    photo</label>
+                                                <input class="form-control" type="file" name="passport_pic">
+                                                @error('passport_pic')
+                                                <span class="text-danger">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12 form-group">
+                                                <label for="driving_lic" class="form-label">Rider Driving
+                                                    License</label>
+                                                <input class="form-control" type="file" name="driving_lic">
+                                                @error('driving_lic')
+                                                <span class="text-danger">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
                                             </div>
 
-                                            <!-- <div class="form-check">
-                                      <label class="form-check-label" for="save-info">Your Photo</label>
-                                    </div>
-
-                                    <div class="row gy-3">
-                                      <div class="col-md-6">
-                                        <label for="cc-name" class="form-label">Image</label>
-                                        <input type="file" name="photo" class="form-control" id="photo">
-                                      </div>
-
-                                      <div class="col-md-6">
-                                        <label for="cc-number" class="form-label">Image Preview</label><br>
-                                           <img id="photo_preview" style="width: 160px;height: 130px; margin-top:10px" src="#" alt="">
-                                      </div>
-                                    </div><br> -->
                                             <div class="card-footer">
                                                 <a href="{{route('home')}}" class="btn btn-warning">Back</a>
                                                 <button style="float:right;" type="submit"
@@ -323,19 +388,6 @@ Agent Dashboard
                             </div>
                             {{-- form input end --}}
 
-                            <div class="form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Name (As Passport/NID)</span>
-                                </div>
-                                <div class="input-group">
-                                    {{-- <div class="input-group-prepend">
-                                        <span class="input-group-text">Name (As Passport/NID)</span>
-                                    </div> --}}
-                                    <input type="text" class="form-control" data-inputmask-alias="datetime"
-                                        data-inputmask-inputformat="mm/dd/yyyy" data-mask>
-                                </div>
-
-                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

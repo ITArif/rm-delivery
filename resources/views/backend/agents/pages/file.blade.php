@@ -10,11 +10,8 @@ Agent Dashboard
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome Icons -->
-{{--
-<link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css') }}"> --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css') }}">
+
 {{-- Datatables --}}
 <link rel="stylesheet" href="{{ asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -27,6 +24,7 @@ Agent Dashboard
 {{-- select 2 --}}
 <link rel="stylesheet" href="{{ asset('backend/plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
 @endsection
 
 {{-- custom js scripts --}}
@@ -59,14 +57,8 @@ Agent Dashboard
 
 <script src="{{ asset('backend/plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- Page specific script -->
-<script>
-    //     $(document).Toasts('create', {
-//   title: 'Toast Title',
-//   body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-//   autohide: true,
-//   delay: 2000,
 
-// })
+<script>
 </script>
 @endsection
 @section('navbar')
@@ -84,35 +76,44 @@ Agent Dashboard
 <div class="content-wrapper">
 
     <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
+    <section class="content ">
+        <div class="container-fluid mt-5">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title text-center">Agent Dashboard</h3>
+                            <h3 class="card-title text-center">Create New Rider</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="contact_datatable" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Company</th>
-                                        <th>Gender</th>
-                                        <th>Address</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
 
-                                </tbody>
+                            {{-- form input start --}}
+                            <div class="row">
+                                <div class="col-md-12 order-md-last">
+                                    <!-- <h4 class="mb-3">Billing address</h4> -->
+                                    <form class="needs-validation" action="{{ url('agents/rider-create') }}"
+                                        method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="col-sm-6">
+                                            <label for="firstName" class="form-label" style="font-weight: bold;">আপনার
+                                                ইমেইল (যদি থাকে)</label>
+                                            <input type="email" class="form-control" name="email"
+                                                placeholder="ইমেইল নাম্বার">
+                                        </div>
+                                        <div class="col-sm-6 h">
+                                            <label for="file" class="form-label" style="font-weight: bold;">file</label>
+                                            <input type="file" class="form-control filepond" name="file"
+                                                placeholder="file upload">
 
-                            </table>
+                                        </div>
+                                        <input type="submit" value="Upload">
+
+                                    </form>
+                                </div>
+                            </div>
+                            {{-- form input end --}}
+
+
                         </div>
                         <!-- /.card-body -->
                     </div>
