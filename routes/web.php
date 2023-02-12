@@ -27,7 +27,9 @@ Route::post('loginCheck', [LoginController::class, 'loginCheck'])->name('loginCh
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/registration-form', [HomeController::class, 'registerForm'])->name('registerForm');
 Route::post('/register', [HomeController::class, 'registered'])->name('registered');
-Route::middleware('admin')->group(function () {
-    Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/all-client', [DashboardController::class, 'allClient'])->name('allClient');
+Route::middleware('admin')->prefix('admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/create-agent-view', [DashboardController::class, 'create_agent_view']);
+    Route::post('/create-agent', [DashboardController::class, 'create_agent']);
+    // Route::get('/all-client', [DashboardController::class, 'allClient'])->name('allClient');
 });

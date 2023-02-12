@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AgentController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
-        return view('backend.agents.pages.dashboard')->with("");
+        if ($req->ajax()) {
+            $data = Rider::all();
+            return datatables($data)
+
+                ->make(true);
+        }
+        return view('backend.agents.dashboard');
     }
     public function create_rider_view()
     {
@@ -26,7 +32,7 @@ class AgentController extends Controller
         ];
         sort($districts_en, SORT_STRING);
         sort($districts_bn, SORT_STRING);
-        return view('backend.agents.pages.create-rider')->with('districts', $districts_en);
+        return view('backend.agents.create-rider')->with('districts', $districts_en);
         // return view('backend.agents.pages.create-rider', compact($districts));
     }
 
@@ -35,7 +41,7 @@ class AgentController extends Controller
     {
         // dd($req->all());
         $validated_data = Validator::make($req->all(),
-            Agent::$rider_rules, Agent::$rider_msg
+            Rider::$rider_rules, Rider::$rider_msg
         );
         if ($validated_data->fails()) {
             return redirect()->back()

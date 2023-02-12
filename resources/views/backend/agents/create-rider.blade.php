@@ -1,4 +1,4 @@
-@extends('backend.agents.agent_layout')
+@extends('backend.layout')
 
 @section('page_title')
 Agent Dashboard
@@ -29,11 +29,11 @@ Agent Dashboard
 </script>
 @endsection
 @section('navbar')
-@include('backend.agents.side_views.navbar')
+@include('backend.side_views.navbar')
 
 @endsection
 @section('sidebar')
-@include('backend.agents.side_views.sidebar')
+@include('backend.side_views.sidebar')
 @endsection
 {{-- main content section start --}}
 @section('main_content')
@@ -203,7 +203,7 @@ Agent Dashboard
                                                     <option value="">...Choose Education...</option>
                                                     <option value="ssc">SSC</option>
                                                     <option value="hsv">HSC</option>
-                                                    <option value="horns">Honrs</option>
+                                                    <option value="horns">Honours</option>
                                                     <option value="masters">MA Masters</option>
                                                 </select>
                                                 @error('education')
