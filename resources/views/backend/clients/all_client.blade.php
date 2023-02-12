@@ -18,25 +18,15 @@
       <tr>
         <th>Name</th>
         <th>Phone</th>
-        <th>gender</th>
-        <th>district</th>
-        <th>present_address</th>
-        <th>education</th>
-        <th>Age</th>
-        <th>motorcycle_ride</th>
+        <th>Email</th>
       </tr>
     </thead>
     <tbody>
       @foreach($allClients as $clinets)
       <tr>
-        <td>{{$clinets->full_name}}</td>
+        <td>{{$clinets->name}}</td>
         <td>{{$clinets->phone}}</td>
-        <td>{{$clinets->gender}}</td>
-        <td>{{$clinets->district}}</td>
-        <td>{{$clinets->present_address}}</td>
-        <td>{{$clinets->education}}</td>
-        <td>{{$clinets->age}}</td>
-        <td>{{$clinets->motorcycle_ride}}</td>
+        <td>{{$clinets->email}}</td>
       </tr>
       @endforeach
     </tbody>

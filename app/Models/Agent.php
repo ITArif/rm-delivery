@@ -12,7 +12,7 @@ class Agent extends Model
 
     protected $fillable = [
         'name', 'email', 'phone', 'age', 'gender',
-        'address', 'district', 'password', 'profile_pic', 'status'];
+        'address', 'district', 'password', 'profile_pic', 'status', 'verification_code'];
 
     /**
      * The attributes that should be hidden for serialization.

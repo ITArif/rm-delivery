@@ -33,3 +33,4 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/create-agent', [DashboardController::class, 'create_agent']);
     // Route::get('/all-client', [DashboardController::class, 'allClient'])->name('allClient');
 });
+///*********************************** */

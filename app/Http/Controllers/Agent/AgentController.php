@@ -107,4 +107,11 @@ class AgentController extends Controller
     {
         return view("backend.agents.pages.change_password");
     }
+    public function testing()
+    {
+        $agent = "something";
+        $verify_link = '/verification/agents?email=' . $agent . '&code=' . $agent;
+        $link = url($verify_link);
+        return $link;
+    }
 }

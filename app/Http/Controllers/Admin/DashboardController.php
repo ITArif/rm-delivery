@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailAgentNotify;
 use App\Models\Agent;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
@@ -34,6 +37,9 @@ class DashboardController extends Controller
                 ->withErrors($validate_data)
                 ->withInput();
         } else {
+
+            // generating verification code
+            $code = bin2hex(random_bytes(3));
             $agent = Agent::create([
                 'name' => $req->name,
                 'phone' => $req->phone,
@@ -42,6 +48,7 @@ class DashboardController extends Controller
                 'gender' => $req->gender,
                 'district' => $req->district,
                 'address' => $req->address,
+                'verification_code' => $code,
             ]);
             if ($req->has('profile_pic')) {
                 $file_base = time() . '-agent' . $agent->id;
@@ -50,9 +57,24 @@ class DashboardController extends Controller
                 // storing all file in corosponding folder and inserting name in database
                 $agent->profile_pic = $req->file('profile_pic')->storeAs('agents/agent_profile', $photo_name);
                 $agent->save();
-                // redirecting back to admin panel
-                $msg = "Agent created successfully";
-                return redirect('admin/create-agent-view')->with(['type' => 'bg-success', 'title' => "Agent Created", 'msg' => $msg]);
+
+                // sending agent an email with verification link
+                $verify_link = '/verification/agents?email=' . $agent->email . '&code=' . $agent->verification_code;
+                $data = [
+                    'name' => $agent->name,
+                    'link' => url($verify_link)];
+
+                try {
+                    Mail::to($agent->email)
+                        ->send(new MailAgentNotify($data));
+                    // redirecting back to admin panel
+                    $msg = "Agent created successfully";
+                    return redirect('admin/create-agent-view')->with(['type' => 'bg-success', 'title' => "Agent Created", 'msg' => $msg]);
+                } catch (Exception $excep) {
+                    $msg = "Failed to Sent Email To Agent";
+                    return redirect('admin/create-agent-view')->with(['type' => 'bg-danger', 'title' => "Mail Send Error", 'msg' => $msg]);
+                }
+
             }
 
         }
