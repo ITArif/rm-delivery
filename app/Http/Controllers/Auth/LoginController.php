@@ -33,8 +33,7 @@ class LoginController extends Controller
                     'id' =>$auth->id,
                     'email' =>$auth->email,
                     'phone' =>$auth->phone,
-                    'first_name' =>$auth->first_name,
-                    'last_name' =>$auth->last_name,
+                    'name' =>$auth->name,
                     'role' =>$auth->role,
                     'photo' =>$auth->photo,
                     'status' =>$auth->status
